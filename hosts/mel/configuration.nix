@@ -75,6 +75,9 @@ in
     "flakes"
   ];
 
+  # Enable nix-ld to run dynamic binaries (needed for uv)
+  programs.nix-ld.enable = true;
+
   # services
 
   services.openssh = {
@@ -109,6 +112,35 @@ in
     isNormalUser = true;
     extraGroups = [ "wheel" ];
     openssh.authorizedKeys.keys = sshKeys;
+  };
+
+  # Generate and persist SSH key for GitHub access
+  systemd.services.setup-github-key = {
+    description = "Setup SSH key for GitHub";
+    wantedBy = [ "multi-user.target" ];
+    before = [ "fava.service" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+    };
+    script = ''
+      mkdir -p /root/.ssh
+      mkdir -p /persist/ssh
+
+      # Generate key in persistent storage if it doesn't exist
+      if [ ! -f /persist/ssh/github_id_ed25519 ]; then
+        ${pkgs.openssh}/bin/ssh-keygen -t ed25519 -f /persist/ssh/github_id_ed25519 -N "" -C "root@mel"
+        echo "=== NEW SSH PUBLIC KEY FOR GITHUB ==="
+        cat /persist/ssh/github_id_ed25519.pub
+        echo "Add this key to: https://github.com/settings/keys"
+        echo "======================================"
+      fi
+
+      # Link to /root/.ssh
+      ln -sf /persist/ssh/github_id_ed25519 /root/.ssh/id_ed25519
+      ln -sf /persist/ssh/github_id_ed25519.pub /root/.ssh/id_ed25519.pub
+      chmod 600 /persist/ssh/github_id_ed25519
+    '';
   };
 
   system.stateVersion = "26.06";
