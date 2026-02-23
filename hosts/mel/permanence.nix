@@ -12,6 +12,14 @@
       "/etc/NetworkManager/system-connections"
       "/var/lib/containers"
       "/var/lib/tailscale"
+      {
+        directory = "/var/lib/loki";
+        user = "loki";
+        group = "loki";
+        mode = "0755";
+      }
+      "/var/lib/prometheus2"
+      "/var/lib/private/alloy"
     ];
     files = [
       "/etc/machine-id"
@@ -27,6 +35,7 @@
   environment.persistence.services = {
     persistentStoragePath = "/persist/services";
     directories = [
+      "/var/lib/grafana"
     ];
   };
 }

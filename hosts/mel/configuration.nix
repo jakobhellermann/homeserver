@@ -8,6 +8,10 @@ let
 
   # Services (used for mdns and index page)
   serviceDescriptions = [
+    {
+      title = "Grafana";
+      domain = "grafana.mel.local";
+    }
   ];
 in
 {

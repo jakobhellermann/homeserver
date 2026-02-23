@@ -4,8 +4,10 @@ NixOS configuration for homeserver.
 
 ## Services
 
-| Service | Access | Data |
-| ------- | ------ | ---- |
+| Service | Access                                                | Data               |
+| ------- | ----------------------------------------------------- | ------------------ |
+| Grafana | [`mel.local/grafana`](http://mel.local/homeassistant) | `/var/lib/grafana` |
+
 ## Quick Commands
 
 ```bash
