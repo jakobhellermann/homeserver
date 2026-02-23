@@ -10,6 +10,7 @@ in
   imports = [
     (import ./disko.nix { device = "/dev/sda"; })
     ../../modules/tools.nix
+    ./custom-services.nix
   ];
 
   # host

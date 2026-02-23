@@ -3,6 +3,7 @@
 {
   imports = [
     ../../modules/services/monitoring.nix
+    ../../modules/services/homeassistant.nix
   ];
 
   services.monitoring = {
@@ -14,5 +15,12 @@
       virtualHost = "mel.local";
       path = "/grafana";
     };
+  };
+
+  services.homeassistant-container = {
+    enable = true;
+    port = 8123;
+    openFirewall = true;
+    dataDir = "/var/lib/homeassistant";
   };
 }
