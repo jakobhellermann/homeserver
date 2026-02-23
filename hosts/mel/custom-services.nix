@@ -5,6 +5,7 @@
     ../../modules/services
     ../../modules/services/blocky.nix
     ../../modules/services/monitoring.nix
+    ../../modules/services/homeassistant.nix
   ];
 
   my.services.blocky = {
@@ -20,6 +21,15 @@
     grafana.port = 3000;
     prometheus.port = 9090;
     loki.port = 3100;
+  };
+
+  my.services.homeassistant = {
+    enable = true;
+    title = "Home Assistant";
+    subdomain = "homeassistant";
+    port = 8123;
+    openFirewall = true;
+    dataDir = "/var/lib/homeassistant";
   };
 
   my.domains = [

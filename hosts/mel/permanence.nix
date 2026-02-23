@@ -49,6 +49,7 @@
         group = "loki";
         mode = "0755";
       }
+      "/var/lib/homeassistant"
     ];
   };
 }
