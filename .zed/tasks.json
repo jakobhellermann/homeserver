@@ -1,0 +1,13 @@
+[
+  {
+    "label": "ssh",
+    "command": "just",
+    "args": ["ssh"],
+    "hide": "on_success",
+  },
+  {
+    "label": "Claude",
+    "command": "claude",
+    "hide": "on_success",
+  },
+]
