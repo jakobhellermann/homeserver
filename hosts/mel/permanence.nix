@@ -36,6 +36,19 @@
   environment.persistence.services = {
     persistentStoragePath = "/persist/services";
     directories = [
+      {
+        directory = "/var/lib/private";
+        mode = "0700";
+      }
+      "/var/lib/private/alloy"
+      "/var/lib/grafana"
+      "/var/lib/prometheus2"
+      {
+        directory = "/var/lib/loki";
+        user = "loki";
+        group = "loki";
+        mode = "0755";
+      }
     ];
   };
 }

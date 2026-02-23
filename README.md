@@ -10,8 +10,9 @@ Accessible under
 
 ## Services
 
-| Service | Access | Data |
-| ------- | ------ | ---- |
+| Service | Access                                        | Data               |
+| ------- | --------------------------------------------- | ------------------ |
+| Grafana | [`grafana.mel.home`](http://grafana.mel.home) | `/var/lib/grafana` |
 
 ## Quick Commands
 
