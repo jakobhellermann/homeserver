@@ -6,6 +6,7 @@
     ../../modules/services/blocky.nix
     ../../modules/services/monitoring.nix
     ../../modules/services/homeassistant.nix
+    ../../modules/services/fava.nix
   ];
 
   my.services.blocky = {
@@ -30,6 +31,16 @@
     port = 8123;
     openFirewall = true;
     dataDir = "/var/lib/homeassistant";
+  };
+
+  my.services.fava = {
+    enable = true;
+    title = "Fava";
+    subdomain = "fava";
+    port = 5000;
+    repoUrl = "git@github.com:jakobhellermann/finances.git";
+    beancountFile = "journal.beancount";
+    sshKeyFile = config.age.secrets.ssh-github.path;
   };
 
   my.domains = [
