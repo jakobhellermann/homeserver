@@ -12,6 +12,10 @@ let
       title = "Grafana";
       domain = "grafana.mel.local";
     }
+    {
+      title = "Home Assistant";
+      domain = "homeassistant.mel.local";
+    }
   ];
 in
 {
