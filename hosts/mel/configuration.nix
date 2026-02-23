@@ -53,7 +53,11 @@ in
 
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 22 ];
+    allowedTCPPorts = [
+      22
+      80
+      443
+    ];
     allowedUDPPorts = [ 5353 ]; # mDNS
   };
 
@@ -75,6 +79,25 @@ in
   services.openssh = {
     enable = true;
     settings.PasswordAuthentication = false;
+  };
+
+  services.nginx = {
+    enable = true;
+
+    recommendedProxySettings = true;
+    recommendedTlsSettings = true;
+    recommendedOptimisation = true;
+    recommendedGzipSettings = true;
+
+    virtualHosts."mel.local" = {
+      default = true;
+      locations."/" = {
+        return = "200 '${builtins.readFile ./index.html}'";
+        extraConfig = ''
+          add_header Content-Type "text/html; charset=utf-8";
+        '';
+      };
+    };
   };
 
   security.sudo.wheelNeedsPassword = false;
