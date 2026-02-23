@@ -16,6 +16,10 @@ let
       title = "Home Assistant";
       domain = "homeassistant.mel.local";
     }
+    {
+      title = "Fava";
+      domain = "fava.mel.local";
+    }
   ];
 in
 {
@@ -94,6 +98,9 @@ in
     "nix-command"
     "flakes"
   ];
+
+  # Enable nix-ld to run dynamic binaries (needed for uv)
+  programs.nix-ld.enable = true;
 
   # services
 

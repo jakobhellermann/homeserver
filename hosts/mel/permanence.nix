@@ -37,6 +37,7 @@
     directories = [
       "/var/lib/grafana"
       "/var/lib/homeassistant"
+      "/var/lib/fava"
     ];
   };
 }

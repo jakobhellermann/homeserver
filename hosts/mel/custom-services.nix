@@ -1,9 +1,10 @@
-{ ... }:
+{ config, ... }:
 
 {
   imports = [
     ../../modules/services/monitoring.nix
     ../../modules/services/homeassistant.nix
+    ../../modules/services/fava.nix
   ];
 
   services.monitoring = {
@@ -20,5 +21,14 @@
     openFirewall = true;
     dataDir = "/var/lib/homeassistant";
     nginx.subdomain = "homeassistant.mel.local";
+  };
+
+  services.fava = {
+    enable = true;
+    port = 5000;
+    repoUrl = "git@github.com:jakobhellermann/finances.git";
+    beancountFile = "journal.beancount";
+    sshKeyFile = config.age.secrets.ssh-github.path;
+    nginx.subdomain = "fava.mel.local";
   };
 }
