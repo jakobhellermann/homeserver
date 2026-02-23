@@ -102,13 +102,13 @@ in
       };
     };
 
-    # my.services.monitoring.scrapeTargets = [
-    #   {
-    #     name = "blocky";
-    #     address = "127.0.0.1:${toString metricsPort}";
-    #     job = "blocky";
-    #   }
-    # ];
+    my.services.monitoring.scrapeTargets = [
+      {
+        name = "blocky";
+        address = "127.0.0.1:${toString metricsPort}";
+        job = "blocky";
+      }
+    ];
 
     services.nginx.virtualHosts."blocky.${builtins.head config.my.domains}" = {
       serverAliases = map (d: "blocky.${d}") (builtins.tail config.my.domains);

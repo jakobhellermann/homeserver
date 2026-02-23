@@ -4,11 +4,22 @@
   imports = [
     ../../modules/services
     ../../modules/services/blocky.nix
+    ../../modules/services/monitoring.nix
   ];
 
   my.services.blocky = {
     enable = true;
     subdomain = "blocky";
+  };
+
+  my.services.monitoring = {
+    enable = true;
+    title = "Grafana";
+    subdomain = "grafana";
+
+    grafana.port = 3000;
+    prometheus.port = 9090;
+    loki.port = 3100;
   };
 
   my.domains = [

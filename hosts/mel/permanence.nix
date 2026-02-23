@@ -15,6 +15,18 @@
       "/var/cache"
       "/var/lib/containers"
       "/var/lib/tailscale"
+      {
+        directory = "/var/lib/loki";
+        user = "loki";
+        group = "loki";
+        mode = "0755";
+      }
+      "/var/lib/prometheus2"
+      {
+        directory = "/var/lib/private";
+        mode = "0700";
+      }
+      "/var/lib/private/alloy"
     ];
     files = [
       "/etc/machine-id"
@@ -35,6 +47,7 @@
   environment.persistence.services = {
     persistentStoragePath = "/persist/services";
     directories = [
+      "/var/lib/grafana"
     ];
   };
 }
