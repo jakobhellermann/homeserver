@@ -48,6 +48,7 @@
     persistentStoragePath = "/persist/services";
     directories = [
       "/var/lib/grafana"
+      "/var/lib/homeassistant"
     ];
   };
 }

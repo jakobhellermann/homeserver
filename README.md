@@ -9,9 +9,10 @@ Accessible under
 
 ## Services
 
-| Service | Access                                          | Data               |
-| ------- | ----------------------------------------------- | ------------------ |
-| Grafana | [`grafana.mel.local`](http://grafana.mel.local) | `/var/lib/grafana` |
+| Service        | Access                                                             | Data                     |
+| -------------- | ------------------------------------------------------------------ | ------------------------ |
+| Grafana        | [`grafana.mel.local`](http://grafana.mel.local)                    | `/var/lib/grafana`       |
+| Home Assistant | [`homeassistant.mel.local`](http://homeassistant.mel.local), :8123 | `/var/lib/homeassistant` |
 
 ## Quick Commands
 

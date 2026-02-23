@@ -32,4 +32,24 @@ in
       sudo --preserve-env=RESTIC_PASSWORD_FILE,RESTIC_REPOSITORY ${lib.getExe pkgs.restic} $argv
     end
   '';
+
+  services.restic.backups."homeassistant" = {
+    inherit passwordFile;
+    inherit environmentFile;
+    inherit timerConfig;
+    inherit repository;
+
+    paths = [ "/persist/services/var/lib/homeassistant" ];
+    extraBackupArgs = retryLock ++ [
+      "--tag service"
+      "--tag homeassistant"
+    ];
+
+    pruneOpts = retryLock ++ [
+      "--keep-daily 14"
+      "--keep-weekly 4"
+      "--keep-monthly 2"
+      "--group-by tags"
+    ];
+  };
 }
