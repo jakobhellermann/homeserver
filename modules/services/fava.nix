@@ -31,10 +31,7 @@ in
       type = types.path;
       default = "/root/.ssh/id_ed25519";
     };
-    nginx = {
-      path = mkOption { type = types.str; };
-      virtualHost = mkOption { type = types.str; };
-    };
+    nginx.subdomain = mkOption { type = types.str; };
   };
 
   config = mkIf cfg.enable {
@@ -95,13 +92,8 @@ in
       uv
     ];
 
-    services.nginx.virtualHosts."${cfg.nginx.virtualHost}".locations = {
-      "${cfg.nginx.path}/" = {
-        proxyPass = "http://127.0.0.1:${toString cfg.port}";
-      };
-
-      # Fava's static files leak outside /beancount prefix
-      "/static/" = {
+    services.nginx.virtualHosts."${cfg.nginx.subdomain}" = {
+      locations."/" = {
         proxyPass = "http://127.0.0.1:${toString cfg.port}";
       };
     };

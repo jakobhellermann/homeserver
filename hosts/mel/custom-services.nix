@@ -12,10 +12,7 @@
     grafana.port = 3000;
     prometheus.port = 9090;
     loki.port = 3100;
-    nginx = {
-      virtualHost = "mel.local";
-      path = "/grafana";
-    };
+    nginx.subdomain = "grafana.mel.local";
   };
 
   services.homeassistant-container = {
@@ -23,6 +20,7 @@
     port = 8123;
     openFirewall = true;
     dataDir = "/var/lib/homeassistant";
+    nginx.subdomain = "homeassistant.mel.local";
   };
 
   services.fava = {
@@ -30,9 +28,6 @@
     port = 5000;
     repoUrl = "git@github.com:jakobhellermann/finances.git";
     beancountFile = "journal.beancount";
-    nginx = {
-      virtualHost = "mel.local";
-      path = "/beancount";
-    };
+    nginx.subdomain = "fava.mel.local";
   };
 }

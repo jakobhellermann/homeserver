@@ -12,10 +12,7 @@ in
     grafana.port = mkOption { type = types.port; };
     loki.port = mkOption { type = types.port; };
     prometheus.port = mkOption { type = types.port; };
-    nginx = {
-      path = mkOption { type = types.str; };
-      virtualHost = mkOption { type = types.str; };
-    };
+    nginx.subdomain = mkOption { type = types.str; };
   };
 
   config = mkIf cfg.enable {
@@ -25,8 +22,7 @@ in
         server = {
           http_port = cfg.grafana.port;
           http_addr = "127.0.0.1";
-          root_url = "http://mel.local/grafana";
-          serve_from_sub_path = true;
+          root_url = "http://${cfg.nginx.subdomain}";
         };
         security = {
           admin_user = "admin";
@@ -179,9 +175,11 @@ in
       }
     '';
 
-    services.nginx.virtualHosts."${cfg.nginx.virtualHost}".locations."${cfg.nginx.path}/" = {
-      proxyPass = "http://127.0.0.1:${toString cfg.grafana.port}";
-      proxyWebsockets = true;
+    services.nginx.virtualHosts."${cfg.nginx.subdomain}" = {
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:${toString cfg.grafana.port}";
+        proxyWebsockets = true;
+      };
     };
   };
 }

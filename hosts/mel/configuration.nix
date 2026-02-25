@@ -1,9 +1,16 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 let
   sshKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB/7y7H/M64OslBJvrMA+s+eF1P4MJVf0hx/Gw4zoQXC"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM/s4OVz67odrG1c2tww9XBoeZmv2on2bEo+qao81mt0"
+  ];
+
+  # List of subdomains to publish via mDNS
+  mdnsSubdomains = [
+    "grafana.mel.local"
+    "homeassistant.mel.local"
+    "fava.mel.local"
   ];
 in
 {
@@ -49,6 +56,7 @@ in
       addresses = true;
       domain = true;
       workstation = true;
+      userServices = true; # to allow avahi-publish for "subdomains"
     };
   };
 
@@ -141,6 +149,29 @@ in
       ln -sf /persist/ssh/github_id_ed25519.pub /root/.ssh/id_ed25519.pub
       chmod 600 /persist/ssh/github_id_ed25519
     '';
+  };
+
+  # Publish subdomain CNAME records via Avahi
+  systemd.services.avahi-publish-subdomains = {
+    description = "Publish service subdomains via Avahi";
+    after = [
+      "avahi-daemon.service"
+      "network-online.target"
+    ];
+    wants = [ "network-online.target" ];
+    wantedBy = [ "multi-user.target" ];
+    partOf = [ "avahi-daemon.service" ];
+    serviceConfig = {
+      Type = "forking";
+      ExecStart = pkgs.writeShellScript "avahi-publish-subdomains" ''
+        IP=$(${pkgs.iproute2}/bin/ip -4 addr show | ${pkgs.gnugrep}/bin/grep -oP '(?<=inet\s)\d+(\.\d+){3}' | ${pkgs.gnugrep}/bin/grep -v 127.0.0.1 | head -n1)
+        ${lib.concatMapStringsSep "\n" (subdomain: ''
+          ${pkgs.avahi}/bin/avahi-publish -a ${subdomain} -R $IP &
+        '') mdnsSubdomains}
+      '';
+      Restart = "on-failure";
+      RestartSec = "10s";
+    };
   };
 
   system.stateVersion = "26.06";

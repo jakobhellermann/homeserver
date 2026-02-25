@@ -20,6 +20,7 @@ in
       type = types.str;
       default = "ghcr.io/home-assistant/home-assistant:stable";
     };
+    nginx.subdomain = mkOption { type = types.str; };
   };
 
   config = mkIf cfg.enable {
@@ -45,5 +46,12 @@ in
     systemd.tmpfiles.rules = [
       "d ${cfg.dataDir} 0755 root root -"
     ];
+
+    services.nginx.virtualHosts."${cfg.nginx.subdomain}" = {
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:${toString cfg.port}";
+        proxyWebsockets = true;
+      };
+    };
   };
 }
