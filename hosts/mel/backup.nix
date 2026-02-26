@@ -52,4 +52,52 @@ in
       "--group-by tags"
     ];
   };
+
+  services.restic.backups."paperless" = {
+    inherit passwordFile;
+    inherit environmentFile;
+    inherit timerConfig;
+    inherit repository;
+
+    paths = [ "/persist/services/var/lib/paperless" ];
+    extraBackupArgs = retryLock ++ [
+      "--tag paperless"
+      "--tag service"
+    ];
+
+    pruneOpts = retryLock ++ [
+      "--keep-daily 14"
+      "--keep-weekly 4"
+      "--keep-monthly 2"
+      "--group-by tags"
+    ];
+  };
+  services.restic.backups."paperless-postgres" = {
+    inherit passwordFile;
+    inherit environmentFile;
+    inherit timerConfig;
+    inherit repository;
+
+    initialize = true;
+
+    command = [
+      "${lib.getExe pkgs.sudo}"
+      "-u postgres"
+      "${pkgs.postgresql}/bin/pg_dump"
+      "--clean"
+      "paperless"
+    ];
+    extraBackupArgs = retryLock ++ [
+      "--tag paperless"
+      "--tag db"
+      "--stdin-filename paperless.sql"
+    ];
+
+    pruneOpts = retryLock ++ [
+      "--keep-daily 14"
+      "--keep-weekly 4"
+      "--keep-monthly 2"
+      "--group-by tags"
+    ];
+  };
 }

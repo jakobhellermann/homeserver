@@ -7,6 +7,7 @@
     ../../modules/services/monitoring.nix
     ../../modules/services/homeassistant.nix
     ../../modules/services/fava.nix
+    ../../modules/services/paperless.nix
   ];
 
   my.services.blocky = {
@@ -41,6 +42,13 @@
     repoUrl = "git@github.com:jakobhellermann/finances.git";
     beancountFile = "journal.beancount";
     sshKeyFile = config.age.secrets.ssh-github.path;
+  };
+
+  my.services.paperless = {
+    enable = true;
+    title = "Paperless";
+    subdomain = "paperless";
+    port = 28981;
   };
 
   my.domains = [

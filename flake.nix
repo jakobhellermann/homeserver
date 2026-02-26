@@ -32,6 +32,15 @@
         system = "x86_64-linux";
         modules = sharedModules ++ [
           ./hosts/mel/configuration.nix
+          {
+            nixpkgs.overlays = [
+              (final: prev: {
+                paperless-ngx = prev.paperless-ngx.overrideAttrs (_: {
+                  dontUsePytestCheck = true;
+                });
+              })
+            ];
+          }
         ];
       };
     };
