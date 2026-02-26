@@ -9,6 +9,7 @@ NixOS configuration for homeserver.
 | Grafana        | [`mel.local/grafana`](http://mel.local/homeassistant)              | `/var/lib/grafana`       |
 | Home Assistant | [`mel.local/homeassistant`](http://mel.local/homeassistant), :8123 | `/var/lib/homeassistant` |
 | Fava           | [`mel.local/grafanancount`](http://mel.local/beancount)            | `/var/lib/fava`          |
+| Paperless      | [`mel.local/paperless`](http://mel.local/paperless)                | `postgres`               |
 
 ## Quick Commands
 

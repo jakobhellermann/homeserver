@@ -20,6 +20,10 @@ let
       title = "Fava";
       domain = "fava.mel.local";
     }
+    {
+      title = "Paperless";
+      domain = "paperless.mel.local";
+    }
   ];
 in
 {

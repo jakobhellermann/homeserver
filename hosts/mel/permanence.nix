@@ -38,6 +38,13 @@
       "/var/lib/grafana"
       "/var/lib/homeassistant"
       "/var/lib/fava"
+      "/var/lib/postgresql"
+      {
+        directory = "/var/lib/paperless";
+        user = "paperless";
+        group = "paperless";
+        mode = "0755";
+      }
     ];
   };
 }

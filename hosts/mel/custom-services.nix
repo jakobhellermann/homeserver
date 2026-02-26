@@ -5,6 +5,7 @@
     ../../modules/services/monitoring.nix
     ../../modules/services/homeassistant.nix
     ../../modules/services/fava.nix
+    ../../modules/services/paperless.nix
   ];
 
   services.monitoring = {
@@ -30,5 +31,11 @@
     beancountFile = "journal.beancount";
     sshKeyFile = config.age.secrets.ssh-github.path;
     nginx.subdomain = "fava.mel.local";
+  };
+
+  services.paperless-ngx = {
+    enable = true;
+    port = 28981;
+    nginx.subdomain = "paperless.mel.local";
   };
 }
