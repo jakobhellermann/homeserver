@@ -14,8 +14,12 @@ in
   imports = [
     ./hardware-configuration.nix
     ./custom-services.nix
+    ./permanence.nix
     ../../modules/tools.nix
-    (import ./disko.nix { device = "/dev/sda"; })
+    (import ./disko.nix {
+      device = "/dev/sda";
+      inherit lib;
+    })
   ];
 
   # host
