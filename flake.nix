@@ -4,6 +4,8 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    agenix.url = "github:ryantm/agenix";
+
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -22,6 +24,7 @@
         inputs.disko.nixosModules.disko
         inputs.nix-index-database.nixosModules.nix-index
         inputs.impermanence.nixosModules.impermanence
+        inputs.agenix.nixosModules.default
       ];
     in
     {

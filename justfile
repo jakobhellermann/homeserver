@@ -12,10 +12,12 @@ update:
 eval args:
     nix eval .#nixosConfigurations.mel.{{ args }}
 
+agenix name:
+    @cd secrets && nix run github:ryantm/agenix -- -e "{{ name }}.age"
+
 check name="mel":
     nix build .#nixosConfigurations.{{ name }}.config.system.build.toplevel --dry-run
 
-# Provision the configuration on a new nixos host, wiping the disk
 provision host:
     nix run github:nix-community/nixos-anywhere -- --flake .#{{ output }} root@{{ host }} -p {{ port }}
 
