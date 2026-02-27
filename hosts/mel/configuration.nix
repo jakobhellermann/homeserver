@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   ...
 }:
 
@@ -14,7 +15,11 @@ in
     ./custom-services.nix
     ./hardware-configuration.nix
     ./nginx
-    (import ./disko.nix { device = "/dev/sda"; })
+    ./permanence.nix
+    (import ./disko.nix {
+      device = "/dev/sda";
+      inherit lib;
+    })
   ];
 
   networking.hostName = name;
