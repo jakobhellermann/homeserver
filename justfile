@@ -12,6 +12,9 @@ check:
 update:
     nix flake update
 
+agenix name:
+    @cd secrets && nix run github:ryantm/agenix -- -e "{{ name }}.age"
+
 # Provision the configuration on a new nixos host, wiping the disk
 provision host:
     nix run github:nix-community/nixos-anywhere -- --flake .#{{ output }} root@{{ host }} -p {{ port }}

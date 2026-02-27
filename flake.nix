@@ -4,6 +4,8 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    agenix.url = "github:ryantm/agenix";
+
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -18,6 +20,7 @@
   outputs =
     {
       self,
+      agenix,
       disko,
       impermanence,
       nixpkgs,
@@ -28,6 +31,7 @@
         system = "x86_64-linux";
         modules = [
           disko.nixosModules.disko
+          agenix.nixosModules.default
           impermanence.nixosModules.impermanence
           nix-index-database.nixosModules.nix-index
           ./hosts/mel/configuration.nix

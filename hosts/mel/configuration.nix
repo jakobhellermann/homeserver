@@ -151,5 +151,10 @@ in
     };
   };
 
+  # Point agenix directly to persisted SSH keys since bind mounts aren't ready during activation
+  # https://github.com/ryantm/agenix/pull/225
+  age.identityPaths = [ "/persist/system/etc/ssh/ssh_host_ed25519_key" ];
+  age.secrets.ssh-github.file = ../../secrets/ssh-github.age;
+
   system.stateVersion = "26.06";
 }
