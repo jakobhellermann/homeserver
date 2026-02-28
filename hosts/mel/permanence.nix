@@ -45,6 +45,8 @@
         group = "paperless";
         mode = "0755";
       }
+      "/var/lib/immich"
+      "/var/lib/redis-immich"
     ];
   };
 }

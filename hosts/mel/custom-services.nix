@@ -6,6 +6,7 @@
     ../../modules/services/homeassistant.nix
     ../../modules/services/fava.nix
     ../../modules/services/paperless.nix
+    ../../modules/services/immich.nix
   ];
 
   services.monitoring = {
@@ -37,5 +38,11 @@
     enable = true;
     port = 28981;
     nginx.subdomain = "paperless.mel.local";
+  };
+
+  services.immich-custom = {
+    enable = true;
+    port = 2283;
+    nginx.subdomain = "immich.mel.local";
   };
 }

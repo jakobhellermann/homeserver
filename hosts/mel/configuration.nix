@@ -24,6 +24,10 @@ let
       title = "Paperless";
       domain = "paperless.mel.local";
     }
+    {
+      title = "Immich";
+      domain = "immich.mel.local";
+    }
   ];
 in
 {
