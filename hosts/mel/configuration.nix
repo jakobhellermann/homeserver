@@ -11,6 +11,7 @@ in
   imports = [
     ../../modules/mdns.nix
     ../../modules/system.nix
+    ../../modules/tailscale.nix
     ../../modules/tools.nix
     ./custom-services.nix
     ./hardware-configuration.nix
@@ -36,6 +37,7 @@ in
   age.identityPaths = [ "/persist/system/etc/ssh/ssh_host_ed25519_key" ];
   age.secrets.wifi-password-env.file = ../../secrets/wifi-password-env.age;
   age.secrets.ssh-github.file = ../../secrets/ssh-github.age;
+  age.secrets.tailscale-authkey.file = ../../secrets/tailscale-authkey.age;
 
   system.stateVersion = "26.06";
 }
