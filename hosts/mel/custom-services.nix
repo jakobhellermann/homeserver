@@ -8,6 +8,7 @@
     ../../modules/services/homeassistant.nix
     ../../modules/services/fava.nix
     ../../modules/services/paperless.nix
+    ../../modules/services/immich.nix
   ];
 
   my.services.blocky = {
@@ -49,6 +50,13 @@
     title = "Paperless";
     subdomain = "paperless";
     port = 28981;
+  };
+
+  my.services.immich = {
+    enable = true;
+    title = "Immich";
+    subdomain = "immich";
+    port = 2283;
   };
 
   my.domains = [

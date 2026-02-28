@@ -100,4 +100,56 @@ in
       "--group-by tags"
     ];
   };
+
+  services.restic.backups."immich" = {
+    inherit passwordFile;
+    inherit environmentFile;
+    inherit timerConfig;
+    inherit repository;
+
+    paths = [
+      "/persist/services/var/lib/immich/library"
+      "/persist/services/var/lib/immich/upload"
+      "/persist/services/var/lib/immich/profile"
+    ];
+    extraBackupArgs = retryLock ++ [
+      "--tag immich"
+      "--tag service"
+    ];
+
+    pruneOpts = retryLock ++ [
+      "--keep-daily 14"
+      "--keep-weekly 4"
+      "--keep-monthly 2"
+      "--group-by tags"
+    ];
+  };
+  services.restic.backups."immich-postgres" = {
+    inherit passwordFile;
+    inherit environmentFile;
+    inherit timerConfig;
+    inherit repository;
+
+    initialize = true;
+
+    command = [
+      "${lib.getExe pkgs.sudo}"
+      "-u postgres"
+      "${pkgs.postgresql}/bin/pg_dump"
+      "--clean"
+      "immich"
+    ];
+    extraBackupArgs = retryLock ++ [
+      "--tag immich"
+      "--tag db"
+      "--stdin-filename immich.sql"
+    ];
+
+    pruneOpts = retryLock ++ [
+      "--keep-daily 14"
+      "--keep-weekly 4"
+      "--keep-monthly 2"
+      "--group-by tags"
+    ];
+  };
 }
