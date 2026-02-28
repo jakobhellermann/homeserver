@@ -9,12 +9,13 @@ Accessible under
 
 ## Services
 
-| Service        | Access                                                             | Data                     |
-| -------------- | ------------------------------------------------------------------ | ------------------------ |
-| Grafana        | [`grafana.mel.local`](http://grafana.mel.local)                    | `/var/lib/grafana`       |
-| Home Assistant | [`homeassistant.mel.local`](http://homeassistant.mel.local), :8123 | `/var/lib/homeassistant` |
-| Fava           | [`fava.mel.local`](http://fava.mel.local)                          | `/var/lib/fava`          |
-| Paperless      | [`paperless.mel.local`](http://paperless.mel.local)                | `postgres`               |
+| Service        | Access                                                             | Data                          |
+| -------------- | ------------------------------------------------------------------ | ----------------------------- |
+| Grafana        | [`grafana.mel.local`](http://grafana.mel.local)                    | `/var/lib/grafana`            |
+| Home Assistant | [`homeassistant.mel.local`](http://homeassistant.mel.local), :8123 | `/var/lib/homeassistant`      |
+| Fava           | [`fava.mel.local`](http://fava.mel.local)                          | `/var/lib/fava`               |
+| Paperless      | [`paperless.mel.local`](http://paperless.mel.local)                | `postgres`                    |
+| Immich         | [`immich.mel.local`](http://immich.mel.local)                      | `/var/lib/immich`, `postgres` |
 
 ## Quick Commands
 
