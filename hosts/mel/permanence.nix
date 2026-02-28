@@ -14,6 +14,7 @@
       "/etc/NetworkManager/system-connections"
       "/var/cache"
       "/var/lib/containers"
+      "/var/lib/tailscale"
     ];
     files = [
       "/etc/machine-id"
