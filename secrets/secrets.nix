@@ -8,6 +8,7 @@ let
   names = [
     "wifi-password-env"
     "ssh-github"
+    "tailscale-authkey"
   ];
 in
 builtins.listToAttrs (

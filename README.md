@@ -2,6 +2,11 @@
 
 NixOS configuration for homeserver.
 
+Accessible under
+
+- [mel.local](http://mel.local) on local network using mDNS
+- [mel.home](http://mel.home) when in [tailscale](https://tailscale.com) network
+
 ## Services
 
 | Service | Access | Data |
