@@ -15,6 +15,7 @@ in
     ./hardware-configuration.nix
     ./custom-services.nix
     ./permanence.nix
+    ../../modules/tailscale.nix
     ../../modules/tools.nix
     (import ./disko.nix {
       device = "/dev/sda";
@@ -155,6 +156,7 @@ in
   # https://github.com/ryantm/agenix/pull/225
   age.identityPaths = [ "/persist/system/etc/ssh/ssh_host_ed25519_key" ];
   age.secrets.ssh-github.file = ../../secrets/ssh-github.age;
+  age.secrets.tailscale-authkey.file = ../../secrets/tailscale-authkey.age;
 
   system.stateVersion = "26.06";
 }

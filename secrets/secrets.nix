@@ -7,6 +7,7 @@ let
 
   names = [
     "ssh-github"
+    "tailscale-authkey"
   ];
 in
 builtins.listToAttrs (

@@ -11,6 +11,7 @@
       "/var/lib/systemd" # https://github.com/NixOS/nixpkgs/blob/master/nixos/doc/manual/administration/systemd-state.section.md
       "/etc/NetworkManager/system-connections"
       "/var/lib/containers"
+      "/var/lib/tailscale"
     ];
     files = [
       "/etc/machine-id"
