@@ -15,6 +15,8 @@ let
     "tailscale-authkey"
     "duckdns-token-env"
     "desec-token-env"
+    "restic-password"
+    "restic-env"
   ];
 in
 builtins.listToAttrs (

@@ -14,6 +14,7 @@ in
     ../../modules/system.nix
     ../../modules/tailscale.nix
     ../../modules/tools.nix
+    ./backup.nix
     ./custom-services.nix
     ./hardware-configuration.nix
     ./nginx
@@ -41,6 +42,8 @@ in
   age.secrets.tailscale-authkey.file = ../../secrets/tailscale-authkey.age;
   age.secrets.duckdns-token-env.file = ../../secrets/duckdns-token-env.age;
   age.secrets.desec-token-env.file = ../../secrets/desec-token-env.age;
+  age.secrets.restic-password.file = ../../secrets/restic-password.age;
+  age.secrets.restic-env.file = ../../secrets/restic-env.age;
 
   system.stateVersion = "26.06";
 }
