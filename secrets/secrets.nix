@@ -9,6 +9,8 @@ let
     "wifi-password-env"
     "ssh-github"
     "tailscale-authkey"
+    "restic-password"
+    "restic-env"
   ];
 in
 builtins.listToAttrs (

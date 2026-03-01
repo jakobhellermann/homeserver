@@ -13,6 +13,7 @@ in
     ../../modules/system.nix
     ../../modules/tailscale.nix
     ../../modules/tools.nix
+    ./backup.nix
     ./custom-services.nix
     ./hardware-configuration.nix
     ./nginx
@@ -38,6 +39,8 @@ in
   age.secrets.wifi-password-env.file = ../../secrets/wifi-password-env.age;
   age.secrets.ssh-github.file = ../../secrets/ssh-github.age;
   age.secrets.tailscale-authkey.file = ../../secrets/tailscale-authkey.age;
+  age.secrets.restic-password.file = ../../secrets/restic-password.age;
+  age.secrets.restic-env.file = ../../secrets/restic-env.age;
 
   system.stateVersion = "26.06";
 }

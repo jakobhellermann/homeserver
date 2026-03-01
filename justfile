@@ -41,3 +41,6 @@ logs service *args:
 
 tunnel local_port:
     ssh mel@{{ host }} -p {{ port }} -L {{ local_port }}:localhost:{{ local_port }} -N
+
+backup service:
+    @just ssh sudo systemctl start restic-backups-{{ service }}.service
