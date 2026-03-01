@@ -3,9 +3,13 @@
 {
   imports = [
     ../../modules/services
+    ../../modules/services/unbound.nix
   ];
 
-  my.services = { };
+  my.services.unbound = {
+    enable = true;
+  };
+
   my.domains = [
     "mel.home"
     "mel.local"
