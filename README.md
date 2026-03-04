@@ -18,6 +18,7 @@ Accessible under
 | Paperless      | [`paperless.mel.home`](http://paperless.mel.home)                | `postgres`                         |
 | Immich         | [`immich.mel.home`](http://immich.mel.home)                      | `/var/lib/immich`, `postgres`      |
 | Zigbee2MQTT    | [`zigbee2mqtt.mel.home`](http://zigbee2mqtt.mel.home)            | `/var/lib/{zigbee2mqtt,mosquitto}` |
+| Minecraft      | `:25565`                                                         | `/var/lib/minecraft`               |
 
 ## Quick Commands
 
