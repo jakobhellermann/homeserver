@@ -10,6 +10,7 @@
     ../../modules/services/fava.nix
     ../../modules/services/paperless.nix
     ../../modules/services/immich.nix
+    ../../modules/services/minecraft.nix
   ];
 
   my.services.blocky = {
@@ -67,6 +68,15 @@
     title = "Immich";
     subdomain = "photos";
     port = 2283;
+  };
+
+  my.services.minecraft = {
+    enable = true;
+    autoStart = false;
+    metrics.enable = true;
+    # whitelist = {
+    #   username = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx";
+    # };
   };
 
   my.domains = [
