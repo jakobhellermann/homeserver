@@ -61,6 +61,12 @@
       }
       "/var/lib/immich"
       "/var/lib/redis-immich"
+      {
+        directory = "/var/lib/minecraft";
+        user = "minecraft";
+        group = "minecraft";
+        mode = "0755";
+      }
     ];
   };
 }

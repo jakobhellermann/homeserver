@@ -17,6 +17,7 @@
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
     zmqtt2prom.url = "github:jakobhellermann/zmqtt2prom-rs";
     zmqtt2prom.inputs.nixpkgs.follows = "nixpkgs";
+    nix-minecraft.url = "github:Infinidoge/nix-minecraft";
   };
 
   outputs =
@@ -34,9 +35,11 @@
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
         modules = sharedModules ++ [
+          inputs.nix-minecraft.nixosModules.minecraft-servers
           ./hosts/mel/configuration.nix
           {
             nixpkgs.overlays = [
+              inputs.nix-minecraft.overlay
               (final: prev: {
                 paperless-ngx = prev.paperless-ngx.overrideAttrs (_: {
                   dontUsePytestCheck = true;
