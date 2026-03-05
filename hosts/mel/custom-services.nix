@@ -6,6 +6,7 @@
     ../../modules/services/blocky.nix
     ../../modules/services/monitoring.nix
     ../../modules/services/homeassistant.nix
+    ../../modules/services/zigbee2mqtt.nix
     ../../modules/services/fava.nix
     ../../modules/services/paperless.nix
     ../../modules/services/immich.nix
@@ -33,6 +34,14 @@
     port = 8123;
     openFirewall = true;
     dataDir = "/var/lib/homeassistant";
+  };
+
+  my.services.zigbee2mqtt = {
+    enable = true;
+    title = "Zigbee2MQTT";
+    subdomain = "zigbee2mqtt";
+    port = 1910;
+    openFirewall = true;
   };
 
   my.services.fava = {
