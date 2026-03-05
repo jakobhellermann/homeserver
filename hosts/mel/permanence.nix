@@ -50,6 +50,8 @@
         mode = "0755";
       }
       "/var/lib/homeassistant"
+      "/var/lib/zigbee2mqtt"
+      "/var/lib/mosquitto"
       "/var/lib/fava"
       "/var/lib/postgresql"
       {
