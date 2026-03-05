@@ -1,12 +1,16 @@
 {
   config,
   lib,
+  pkgs,
+  inputs,
   ...
 }:
 
 with lib;
 let
   cfg = config.my.services.zigbee2mqtt;
+  mqttPort = 1883;
+  zmqtt2prom = inputs.zmqtt2prom.packages.${pkgs.system}.default;
 in
 {
   options.my.services.zigbee2mqtt = {
@@ -28,6 +32,14 @@ in
     openFirewall = mkOption {
       type = types.bool;
       default = false;
+    };
+    zmqtt2prom = {
+      enable = mkEnableOption "zmqtt2prom Prometheus exporter for Zigbee2MQTT";
+      port = mkOption {
+        type = types.port;
+        default = 9851;
+        description = "HTTP port for Prometheus metrics";
+      };
     };
   };
 
@@ -106,5 +118,29 @@ in
         proxyWebsockets = true;
       };
     };
+
+    systemd.services.zmqtt2prom = mkIf cfg.zmqtt2prom.enable {
+      description = "Zigbee2MQTT Prometheus Exporter";
+      wantedBy = [ "multi-user.target" ];
+      after = [
+        "mosquitto.service"
+        "zigbee2mqtt.service"
+      ];
+      serviceConfig = {
+        ExecStart = "${zmqtt2prom}/bin/zmqtt2prom --mqtt-host 127.0.0.1 --mqtt-port ${toString mqttPort} --http-port ${toString cfg.zmqtt2prom.port}";
+        Restart = "on-failure";
+        DynamicUser = true;
+      };
+    };
+
+    my.services.monitoring.scrapeTargets = mkIf cfg.zmqtt2prom.enable [
+      {
+        name = "zmqtt2prom";
+        address = "127.0.0.1:${toString cfg.zmqtt2prom.port}";
+        job = "zigbee2mqtt";
+        scrapeInterval = "15s";
+
+      }
+    ];
   };
 }
