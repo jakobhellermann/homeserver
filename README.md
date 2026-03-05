@@ -10,13 +10,14 @@ Accessible under
 
 ## Services
 
-| Service        | Access                                                           | Data                          |
-| -------------- | ---------------------------------------------------------------- | ----------------------------- |
-| Grafana        | [`grafana.mel.home`](http://grafana.mel.home)                    | `/var/lib/grafana`            |
-| Home Assistant | [`homeassistant.mel.home`](http://homeassistant.mel.home), :8123 | `/var/lib/homeassistant`      |
-| Fava           | [`fava.mel.home`](http://fava.mel.home)                          | `/var/lib/fava`               |
-| Paperless      | [`paperless.mel.home`](http://paperless.mel.home)                | `postgres`                    |
-| Immich         | [`immich.mel.home`](http://immich.mel.home)                      | `/var/lib/immich`, `postgres` |
+| Service        | Access                                                           | Data                               |
+| -------------- | ---------------------------------------------------------------- | ---------------------------------- |
+| Grafana        | [`grafana.mel.home`](http://grafana.mel.home)                    | `/var/lib/grafana`                 |
+| Home Assistant | [`homeassistant.mel.home`](http://homeassistant.mel.home), :8123 | `/var/lib/homeassistant`           |
+| Fava           | [`fava.mel.home`](http://fava.mel.home)                          | `/var/lib/fava`                    |
+| Paperless      | [`paperless.mel.home`](http://paperless.mel.home)                | `postgres`                         |
+| Immich         | [`immich.mel.home`](http://immich.mel.home)                      | `/var/lib/immich`, `postgres`      |
+| Zigbee2MQTT    | [`zigbee2mqtt.mel.home`](http://zigbee2mqtt.mel.home)            | `/var/lib/{zigbee2mqtt,mosquitto}` |
 
 ## Quick Commands
 
