@@ -42,6 +42,7 @@
     subdomain = "zigbee2mqtt";
     port = 1910;
     openFirewall = true;
+    zmqtt2prom.enable = true;
   };
 
   my.services.fava = {
