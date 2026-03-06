@@ -3,11 +3,12 @@
 {
   imports = [
     ../../modules/services
-    ../../modules/services/unbound.nix
+    ../../modules/services/blocky.nix
   ];
 
-  my.services.unbound = {
+  my.services.blocky = {
     enable = true;
+    subdomain = "blocky";
   };
 
   my.domains = [
