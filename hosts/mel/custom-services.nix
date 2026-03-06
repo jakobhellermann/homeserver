@@ -8,5 +8,6 @@
   my.services = { };
   my.domains = [
     "mel.home"
+    "mel.local"
   ];
 }

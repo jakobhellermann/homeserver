@@ -8,6 +8,7 @@ let
 in
 {
   imports = [
+    ../../modules/mdns.nix
     ../../modules/system.nix
     ../../modules/tools.nix
     ./custom-services.nix
