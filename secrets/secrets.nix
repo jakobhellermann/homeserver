@@ -10,6 +10,7 @@ let
   systems = [ system_mel ];
 
   names = [
+    "wifi-password-env"
     "ssh-github"
   ];
 in
