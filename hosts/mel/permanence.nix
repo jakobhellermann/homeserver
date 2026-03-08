@@ -68,6 +68,47 @@
         group = "minecraft";
         mode = "0755";
       }
+      {
+        directory = "/var/lib/jellyfin";
+        user = "jellyfin";
+        group = "media";
+        mode = "0775";
+      }
+      {
+        directory = "/var/lib/sonarr";
+        user = "sonarr";
+        group = "media";
+        mode = "0775";
+      }
+      {
+        directory = "/var/lib/radarr";
+        user = "radarr";
+        group = "media";
+        mode = "0775";
+      }
+      {
+        directory = "/var/lib/private/prowlarr";
+        mode = "0700";
+      }
+      {
+        directory = "/var/lib/bazarr";
+        user = "bazarr";
+        group = "media";
+        mode = "0775";
+      }
+      {
+        directory = "/var/lib/transmission";
+        user = "transmission";
+        group = "media";
+        mode = "0775";
+      }
+      {
+        directory = "/var/lib/media";
+        user = "root";
+        group = "media";
+        mode = "0775";
+      }
+      "/var/lib/seerr"
     ];
   };
 }
