@@ -11,6 +11,7 @@
     ../../modules/services/paperless.nix
     ../../modules/services/immich.nix
     ../../modules/services/minecraft.nix
+    ../../modules/services/mediaserver.nix
   ];
 
   my.services.blocky = {
@@ -77,6 +78,13 @@
     # whitelist = {
     #   username = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx";
     # };
+  };
+
+  my.services.mediaserver = {
+    enable = true;
+    title = "Jellyfin";
+    subdomain = "jellyfin";
+    exposePublic = true;
   };
 
   my.domains = [
