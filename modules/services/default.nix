@@ -5,6 +5,11 @@
     type = lib.types.listOf lib.types.str;
     description = "List of base domains for services (e.g., mel.local, mel.home)";
   };
+  options.my.publicDomains = lib.mkOption {
+    type = lib.types.listOf lib.types.str;
+    default = [ ];
+    description = "List of public domains for internet-facing services (e.g., jjakobh.duckdns.org)";
+  };
   options.my.localIP = lib.mkOption {
     type = lib.types.str;
     description = "Local IP address of the server on the LAN";

@@ -6,6 +6,7 @@ Accessible under
 
 - [mel.local](http://mel.local) on local network using mDNS
 - [mel.home](http://mel.home) when in [tailscale](https://tailscale.com) network
+- [jjakobh.duckdns.org](http://jjakobh.duckdns.org) (only public services)
 
 ## Services
 

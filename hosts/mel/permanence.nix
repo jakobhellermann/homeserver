@@ -15,6 +15,7 @@
       "/var/cache"
       "/var/lib/containers"
       "/var/lib/tailscale"
+      "/var/lib/acme"
     ];
     files = [
       "/etc/machine-id"

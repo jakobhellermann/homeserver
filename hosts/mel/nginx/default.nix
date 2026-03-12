@@ -5,6 +5,17 @@
   ...
 }:
 
+let
+  notFound = {
+    return = "404 'Not Found'";
+    extraConfig = ''
+      default_type text/plain;
+    '';
+  };
+
+  publicServices = lib.filterAttrs (_: cfg: cfg.exposePublic or false) config.my.services;
+in
+
 {
   networking.firewall = {
     allowedTCPPorts = [
@@ -36,13 +47,34 @@
       # Fallback for unknown hosts
       "_" = {
         default = true;
-        locations."/" = {
-          return = "404 'Not Found'";
-          extraConfig = ''
-            default_type text/plain;
-          '';
-        };
+        locations."/" = notFound;
       };
-    };
+    }
+    // builtins.listToAttrs (
+      map (domain: {
+        name = "*.${domain}";
+        value = {
+          useACMEHost = domain;
+          forceSSL = true;
+          locations."/" = notFound;
+        };
+      }) config.my.publicDomains
+    )
+    // builtins.listToAttrs (
+      map (domain: {
+        name = domain;
+        value = {
+          useACMEHost = domain;
+          forceSSL = true;
+          locations."/" = {
+            root = import ./index-page.nix {
+              inherit pkgs lib;
+              services = publicServices;
+            };
+            index = "index.html";
+          };
+        };
+      }) config.my.publicDomains
+    );
   };
 }
