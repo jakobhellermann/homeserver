@@ -69,6 +69,7 @@
     title = "Immich";
     subdomain = "photos";
     port = 2283;
+    exposePublic = true;
   };
 
   my.services.minecraft = {

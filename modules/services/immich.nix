@@ -20,6 +20,7 @@ in
       default = 2283;
     };
     metrics.enable = mkEnableOption "Prometheus metrics";
+    exposePublic = mkEnableOption "expose this service on public domains with HTTPS";
   };
 
   config = mkIf cfg.enable {
@@ -49,21 +50,39 @@ in
       }
     ];
 
-    services.nginx.virtualHosts."${cfg.subdomain}.${builtins.head config.my.domains}" = {
-      serverAliases = map (d: "${cfg.subdomain}.${d}") (builtins.tail config.my.domains);
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:${toString cfg.port}";
-        proxyWebsockets = true;
-        extraConfig = ''
-          # Increase timeouts for photo/video uploads
-          proxy_read_timeout 600;
-          proxy_connect_timeout 600;
-          proxy_send_timeout 600;
+    services.nginx.virtualHosts =
+      let
+        locationImmich = {
+          proxyPass = "http://127.0.0.1:${toString cfg.port}";
+          proxyWebsockets = true;
+          extraConfig = ''
+            # Increase timeouts for photo/video uploads
+            proxy_read_timeout 600;
+            proxy_connect_timeout 600;
+            proxy_send_timeout 600;
 
-          # Handle large file uploads
-          client_max_body_size 50000M;
-        '';
-      };
-    };
+            # Handle large file uploads
+            client_max_body_size 50000M;
+          '';
+        };
+      in
+      {
+        "${cfg.subdomain}.${builtins.head config.my.domains}" = {
+          serverAliases = map (d: "${cfg.subdomain}.${d}") (builtins.tail config.my.domains);
+          locations."/" = locationImmich;
+        };
+      }
+      // optionalAttrs cfg.exposePublic (
+        builtins.listToAttrs (
+          map (domain: {
+            name = "${cfg.subdomain}.${domain}";
+            value = {
+              useACMEHost = domain;
+              forceSSL = true;
+              locations."/" = locationImmich;
+            };
+          }) config.my.publicDomains
+        )
+      );
   };
 }
