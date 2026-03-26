@@ -7,6 +7,7 @@
 let
   domainDuckDNS = "jjakobh.duckdns.org";
   domainDesec = "jjakobh.dedyn.io";
+
   configTemplate = builtins.toJSON {
     settings = [
       {
@@ -49,11 +50,6 @@ in
       '';
     };
   };
-
-  config.my.publicDomains = [
-    domainDuckDNS
-    domainDesec
-  ];
 
   config.security.acme = {
     acceptTerms = true;

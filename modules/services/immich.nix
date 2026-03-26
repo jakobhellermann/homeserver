@@ -50,39 +50,21 @@ in
       }
     ];
 
-    services.nginx.virtualHosts =
-      let
-        locationImmich = {
-          proxyPass = "http://127.0.0.1:${toString cfg.port}";
-          proxyWebsockets = true;
-          extraConfig = ''
-            # Increase timeouts for photo/video uploads
-            proxy_read_timeout 600;
-            proxy_connect_timeout 600;
-            proxy_send_timeout 600;
+    my.nginx.${cfg.subdomain} = {
+      exposePublic = cfg.exposePublic;
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:${toString cfg.port}";
+        proxyWebsockets = true;
+        extraConfig = ''
+          # Increase timeouts for photo/video uploads
+          proxy_read_timeout 600;
+          proxy_connect_timeout 600;
+          proxy_send_timeout 600;
 
-            # Handle large file uploads
-            client_max_body_size 50000M;
-          '';
-        };
-      in
-      {
-        "${cfg.subdomain}.${builtins.head config.my.domains}" = {
-          serverAliases = map (d: "${cfg.subdomain}.${d}") (builtins.tail config.my.domains);
-          locations."/" = locationImmich;
-        };
-      }
-      // optionalAttrs cfg.exposePublic (
-        builtins.listToAttrs (
-          map (domain: {
-            name = "${cfg.subdomain}.${domain}";
-            value = {
-              useACMEHost = domain;
-              forceSSL = true;
-              locations."/" = locationImmich;
-            };
-          }) config.my.publicDomains
-        )
-      );
+          # Handle large file uploads
+          client_max_body_size 50000M;
+        '';
+      };
+    };
   };
 }

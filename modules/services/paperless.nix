@@ -23,7 +23,7 @@ in
     services.paperless = {
       enable = true;
       port = cfg.port;
-      domain = "${cfg.subdomain}.${builtins.head config.my.domains}";
+      domain = "${cfg.subdomain}.${config.my.primaryDomain}";
 
       # Use local PostgreSQL database
       database.createLocally = true;
@@ -38,8 +38,7 @@ in
       };
     };
 
-    services.nginx.virtualHosts."${cfg.subdomain}.${builtins.head config.my.domains}" = {
-      serverAliases = map (d: "${cfg.subdomain}.${d}") (builtins.tail config.my.domains);
+    my.nginx.${cfg.subdomain} = {
       locations."/" = {
         proxyPass = "http://127.0.0.1:${toString cfg.port}";
         proxyWebsockets = true;

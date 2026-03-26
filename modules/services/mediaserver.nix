@@ -142,9 +142,10 @@ in
     };
 
     # Nginx reverse proxies
-    services.nginx.virtualHosts =
-      let
-        locationJellyfin = {
+    my.nginx = {
+      ${cfg.subdomain} = {
+        exposePublic = cfg.exposePublic;
+        locations."/" = {
           proxyPass = "http://127.0.0.1:${toString cfg.jellyfin.port}";
           proxyWebsockets = true;
           extraConfig = ''
@@ -155,96 +156,46 @@ in
             client_max_body_size 0;
           '';
         };
-      in
-      {
-        # Jellyfin
-        "${cfg.subdomain}.${builtins.head config.my.domains}" = {
-          serverAliases = map (d: "${cfg.subdomain}.${d}") (builtins.tail config.my.domains);
-          locations."/" = locationJellyfin;
-        };
+      };
 
-        # Sonarr
-        "sonarr.${builtins.head config.my.domains}" = {
-          serverAliases = map (d: "sonarr.${d}") (builtins.tail config.my.domains);
-          locations."/" = {
-            proxyPass = "http://127.0.0.1:${toString cfg.sonarr.port}";
-            proxyWebsockets = true;
-          };
-        };
+      sonarr.locations."/" = {
+        proxyPass = "http://127.0.0.1:${toString cfg.sonarr.port}";
+        proxyWebsockets = true;
+      };
 
-        # Radarr
-        "radarr.${builtins.head config.my.domains}" = {
-          serverAliases = map (d: "radarr.${d}") (builtins.tail config.my.domains);
-          locations."/" = {
-            proxyPass = "http://127.0.0.1:${toString cfg.radarr.port}";
-            proxyWebsockets = true;
-          };
-        };
+      radarr.locations."/" = {
+        proxyPass = "http://127.0.0.1:${toString cfg.radarr.port}";
+        proxyWebsockets = true;
+      };
 
-        # Prowlarr
-        "prowlarr.${builtins.head config.my.domains}" = {
-          serverAliases = map (d: "prowlarr.${d}") (builtins.tail config.my.domains);
-          locations."/" = {
-            proxyPass = "http://127.0.0.1:${toString cfg.prowlarr.port}";
-            proxyWebsockets = true;
-          };
-        };
+      prowlarr.locations."/" = {
+        proxyPass = "http://127.0.0.1:${toString cfg.prowlarr.port}";
+        proxyWebsockets = true;
+      };
 
-        # Bazarr
-        "bazarr.${builtins.head config.my.domains}" = {
-          serverAliases = map (d: "bazarr.${d}") (builtins.tail config.my.domains);
-          locations."/" = {
-            proxyPass = "http://127.0.0.1:${toString cfg.bazarr.port}";
-            proxyWebsockets = true;
-          };
-        };
+      bazarr.locations."/" = {
+        proxyPass = "http://127.0.0.1:${toString cfg.bazarr.port}";
+        proxyWebsockets = true;
+      };
 
-        # Transmission
-        "transmission.${builtins.head config.my.domains}" = {
-          serverAliases = map (d: "transmission.${d}") (builtins.tail config.my.domains);
-          locations."/" = {
-            return = "301 $scheme://$host/transmission/web/";
-          };
-          locations."/transmission" = {
-            proxyPass = "http://127.0.0.1:${toString cfg.transmission.port}";
-            proxyWebsockets = true;
-            extraConfig = ''
-              proxy_pass_header X-Transmission-Session-Id;
-            '';
-          };
+      transmission = {
+        locations."/" = {
+          return = "301 $scheme://$host/transmission/web/";
         };
+        locations."/transmission" = {
+          proxyPass = "http://127.0.0.1:${toString cfg.transmission.port}";
+          proxyWebsockets = true;
+          extraConfig = ''
+            proxy_pass_header X-Transmission-Session-Id;
+          '';
+        };
+      };
 
-        # Seerr
-        "seerr.${builtins.head config.my.domains}" = {
-          serverAliases = map (d: "seerr.${d}") (builtins.tail config.my.domains);
-          locations."/" = {
-            proxyPass = "http://127.0.0.1:${toString cfg.seerr.port}";
-            proxyWebsockets = true;
-          };
-        };
-      }
-      // optionalAttrs cfg.exposePublic (
-        builtins.listToAttrs (
-          map (domain: {
-            name = "${cfg.subdomain}.${domain}";
-            value = {
-              useACMEHost = domain;
-              forceSSL = true;
-              locations."/" = {
-                proxyPass = "http://127.0.0.1:${toString cfg.jellyfin.port}";
-                proxyWebsockets = true;
-                extraConfig = ''
-                  proxy_read_timeout 600s;
-                  proxy_send_timeout 600s;
-                  proxy_connect_timeout 600s;
-                  proxy_buffering off;
-                  client_max_body_size 0;
-                '';
-              };
-            };
-          }) config.my.publicDomains
-        )
-      );
+      seerr.locations."/" = {
+        proxyPass = "http://127.0.0.1:${toString cfg.seerr.port}";
+        proxyWebsockets = true;
+      };
+    };
 
   };
 }

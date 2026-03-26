@@ -23,7 +23,7 @@
   };
 
   # Publish subdomain CNAME records via Avahi
-  systemd.services.avahi-publish-subdomains = lib.mkIf ((config.my.services or { }) != { }) {
+  systemd.services.avahi-publish-subdomains = lib.mkIf (config.my.nginx != { }) {
     description = "Publish service subdomains via Avahi";
     after = [
       "avahi-daemon.service"
@@ -37,9 +37,9 @@
       ExecStart = pkgs.writeShellScript "avahi-publish-subdomains" ''
         IP=$(${pkgs.iproute2}/bin/ip -4 addr show | ${pkgs.gnugrep}/bin/grep -oP '(?<=inet\s)\d+(\.\d+){3}' | ${pkgs.gnugrep}/bin/grep -v 127.0.0.1 | head -n1)
         ${lib.concatStringsSep "\n" (
-          lib.mapAttrsToList (name: cfg: ''
-            ${pkgs.avahi}/bin/avahi-publish -a ${cfg.subdomain}.mel.local -R $IP &
-          '') (lib.filterAttrs (_name: cfg: cfg ? subdomain) config.my.services)
+          map (subdomain: ''
+            ${pkgs.avahi}/bin/avahi-publish -a ${subdomain}.mel.local -R $IP &
+          '') (builtins.attrNames config.my.nginx)
         )}
       '';
       Restart = "on-failure";

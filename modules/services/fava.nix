@@ -81,8 +81,7 @@ in
       };
     };
 
-    services.nginx.virtualHosts."${cfg.subdomain}.${builtins.head config.my.domains}" = {
-      serverAliases = map (d: "${cfg.subdomain}.${d}") (builtins.tail config.my.domains);
+    my.nginx.${cfg.subdomain} = {
       extraConfig = ''
         error_page 403 @forbidden;
         location @forbidden {

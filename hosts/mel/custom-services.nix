@@ -88,11 +88,20 @@
     exposePublic = true;
   };
 
-  my.domains = [
-    "mel.home"
-    "mel.local"
-    "mel.tail335875.ts.net"
-  ];
+  my.primaryDomain = "mel.home";
+  my.domains = {
+    "mel.home" = { };
+    "mel.local" = { };
+    "mel.tail335875.ts.net" = { };
+    "jjakobh.duckdns.org" = {
+      public = true;
+      acme = true;
+    };
+    "jjakobh.dedyn.io" = {
+      public = true;
+      acme = true;
+    };
+  };
   my.localIP = "192.168.178.128";
   my.tailscaleIP = "100.113.32.56";
   my.tailscale.advertiseRoutes = [ "${config.my.localIP}/32" ];

@@ -27,9 +27,7 @@ let
     }
   ];
 
-  subdomains = lib.mapAttrsToList (name: svc: svc.subdomain) (
-    lib.filterAttrs (_name: svc: (svc.enable or false) && (svc ? subdomain)) config.my.services
-  );
+  subdomains = builtins.attrNames config.my.nginx;
 
   # Build customDNS mapping: base domains + all service subdomains for each domain
   customDNSMapping = lib.listToAttrs (
@@ -110,8 +108,7 @@ in
       }
     ];
 
-    services.nginx.virtualHosts."blocky.${builtins.head config.my.domains}" = {
-      serverAliases = map (d: "blocky.${d}") (builtins.tail config.my.domains);
+    my.nginx.blocky = {
       locations."/" = {
         proxyPass = "http://127.0.0.1:${toString metricsPort}";
       };

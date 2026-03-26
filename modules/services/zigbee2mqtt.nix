@@ -50,7 +50,7 @@ in
       enable = true;
       settings = {
         version = 5;
-        url = "https://${cfg.subdomain}.${builtins.head config.my.domains}";
+        url = "https://${cfg.subdomain}.${config.my.primaryDomain}";
         serial = {
           port = cfg.serialPort;
           adapter = cfg.serialAdapter;
@@ -111,8 +111,7 @@ in
       1883 # mosquitto MQTT
     ];
 
-    services.nginx.virtualHosts."${cfg.subdomain}.${builtins.head config.my.domains}" = {
-      serverAliases = map (d: "${cfg.subdomain}.${d}") (builtins.tail config.my.domains);
+    my.nginx.${cfg.subdomain} = {
       locations."/" = {
         proxyPass = "http://127.0.0.1:${toString cfg.port}";
         proxyWebsockets = true;

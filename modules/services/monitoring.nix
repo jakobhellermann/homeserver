@@ -46,7 +46,7 @@ in
         server = {
           http_port = cfg.grafana.port;
           http_addr = "127.0.0.1";
-          root_url = "http://${cfg.subdomain}.${builtins.head config.my.domains}";
+          root_url = "http://${cfg.subdomain}.${config.my.primaryDomain}";
         };
         security = {
           admin_user = "admin";
@@ -230,8 +230,7 @@ in
             }
     '';
 
-    services.nginx.virtualHosts."${cfg.subdomain}.${builtins.head config.my.domains}" = {
-      serverAliases = map (d: "${cfg.subdomain}.${d}") (builtins.tail config.my.domains);
+    my.nginx.${cfg.subdomain} = {
       locations."/" = {
         proxyPass = "http://127.0.0.1:${toString cfg.grafana.port}";
         proxyWebsockets = true;
