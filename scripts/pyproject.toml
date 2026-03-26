@@ -1,0 +1,17 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "immich-tools"
+version = "0.1.0"
+description = "Homeserver utility scripts"
+requires-python = ">=3.14"
+dependencies = []
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/immich"]
+
+[project.scripts]
+sync-favorites = "immich.cli.sync_favorites:main"
+auto-album = "immich.cli.auto_album:main"
