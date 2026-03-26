@@ -101,6 +101,9 @@
       public = true;
       acme = true;
     };
+    "jjakobh.me" = {
+      public = true;
+    };
   };
   my.localIP = "192.168.178.128";
   my.tailscaleIP = "100.113.32.56";

@@ -17,6 +17,8 @@ let
     "desec-token-env"
     "restic-password"
     "restic-env"
+    "cloudflare-tunnel-certificate"
+    "cloudflare-tunnel-credentials"
   ];
 in
 builtins.listToAttrs (

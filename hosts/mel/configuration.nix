@@ -44,6 +44,8 @@ in
   age.secrets.desec-token-env.file = ../../secrets/desec-token-env.age;
   age.secrets.restic-password.file = ../../secrets/restic-password.age;
   age.secrets.restic-env.file = ../../secrets/restic-env.age;
+  age.secrets.cloudflare-tunnel-certificate.file = ../../secrets/cloudflare-tunnel-certificate.age;
+  age.secrets.cloudflare-tunnel-credentials.file = ../../secrets/cloudflare-tunnel-credentials.age;
 
   system.stateVersion = "26.06";
 }
