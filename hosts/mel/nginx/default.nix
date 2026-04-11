@@ -13,6 +13,10 @@ let
     '';
   };
 
+  publicAccessLog = ''
+    access_log syslog:server=unix:/dev/log,tag=nginx_public public;
+  '';
+
   domains = config.my.domains;
   trustedDomains = lib.filterAttrs (_: d: !d.public) domains;
   publicDomains = lib.filterAttrs (_: d: d.public) domains;
@@ -34,6 +38,9 @@ let
   mkVhostWithAcme =
     domain: entry:
     mkVhost entry
+    // {
+      extraConfig = entry.extraConfig + publicAccessLog;
+    }
     // lib.optionalAttrs domains.${domain}.acme {
       useACMEHost = domain;
       forceSSL = true;
@@ -67,6 +74,7 @@ let
       name = "*.${domain}";
       value = {
         locations."/" = notFound;
+        extraConfig = publicAccessLog;
       }
       // lib.optionalAttrs domains.${domain}.acme {
         useACMEHost = domain;
@@ -100,6 +108,7 @@ let
           };
           index = "index.html";
         };
+        extraConfig = publicAccessLog;
       }
       // lib.optionalAttrs domains.${domain}.acme {
         useACMEHost = domain;
@@ -125,6 +134,13 @@ in
     recommendedOptimisation = true;
     recommendedGzipSettings = true;
 
+    commonHttpConfig = ''
+      log_format public '$http_cf_connecting_ip - $remote_user [$time_local] '
+                        '"$request" $status $body_bytes_sent '
+                        '"$http_referer" "$http_user_agent" '
+                        'host=$host';
+    '';
+
     virtualHosts =
       trustedVhosts
       // publicVhosts
@@ -136,6 +152,7 @@ in
         "_" = {
           default = true;
           locations."/" = notFound;
+          extraConfig = publicAccessLog;
         };
       };
   };
