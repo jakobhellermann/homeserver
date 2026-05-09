@@ -22,7 +22,6 @@ in
     ./wifi.nix
     (import ./disko.nix {
       device = "/dev/sda";
-      inherit lib;
     })
   ];
 
