@@ -88,13 +88,13 @@ modules/
     └── mediaserver.nix
 
 secrets/
-├── ssh-github.age           # Encrypted GitHub SSH key (agenix)
-├── tailscale-authkey.age    # Tailscale authentication key
-├── wifi-password-env.age    # WiFi network password
-├── duckdns-token-env.age    # DuckDNS token for ACME DNS challenge
-├── desec-token-env.age      # deSEC token for ACME DNS challenge
-├── restic-password.age      # Restic backup repository password
-└── restic-env.age           # Restic environment variables (e.g., cloud storage credentials)
+├── ssh-github.age                      # Encrypted GitHub SSH key (agenix)
+├── tailscale-authkey.age               # Tailscale authentication key
+├── wifi-password-env.age               # WiFi network password
+├── cloudflare-tunnel-certificate.age   # Cloudflare Tunnel origin certificate
+├── cloudflare-tunnel-credentials.age   # Cloudflare Tunnel credentials
+├── restic-password.age                 # Restic backup repository password
+└── restic-env.age                      # Restic environment variables (e.g., cloud storage credentials)
 ```
 
 ### Custom Service Module Pattern
@@ -305,15 +305,15 @@ The GitHub SSH key is loaded into Fava service via systemd's `LoadCredential` di
 - `ssh-github.age` — GitHub SSH key for Fava repo access
 - `tailscale-authkey.age` — Tailscale authentication key
 - `wifi-password-env.age` — WiFi network password (env file)
-- `duckdns-token-env.age` — DuckDNS API token for ACME DNS challenge
-- `desec-token-env.age` — deSEC API token for ACME DNS challenge
+- `cloudflare-tunnel-certificate.age` — Cloudflare Tunnel origin certificate
+- `cloudflare-tunnel-credentials.age` — Cloudflare Tunnel credentials
 - `restic-password.age` — Restic backup repository password
 - `restic-env.age` — Restic environment variables (cloud storage credentials)
 
 ## Important Notes
 
 - **Destructive Operations**: `just provision` will wipe the target server. Always use `just deploy` for updates.
-- **Secrets Management**: All sensitive secrets are managed via agenix, including GitHub SSH key, Tailscale auth key, WiFi password, ACME tokens, and Restic credentials.
+- **Secrets Management**: All sensitive secrets are managed via agenix, including GitHub SSH key, Tailscale auth key, WiFi password, Cloudflare Tunnel credentials, and Restic credentials.
 - **Backups**: Automatic daily backups via Restic to `/persist/backup/`. Backed up items:
   - Per-database PostgreSQL dumps (paperless, immich)
   - Home Assistant data

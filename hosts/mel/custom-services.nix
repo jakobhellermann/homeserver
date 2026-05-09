@@ -93,14 +93,6 @@
     "mel.home" = { };
     "mel.local" = { };
     "mel.tail335875.ts.net" = { };
-    "jjakobh.duckdns.org" = {
-      public = true;
-      acme = true;
-    };
-    "jjakobh.dedyn.io" = {
-      public = true;
-      acme = true;
-    };
     "jjakobh.me" = {
       public = true;
     };

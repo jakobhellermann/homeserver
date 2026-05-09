@@ -13,8 +13,6 @@ let
     "wifi-password-env"
     "ssh-github"
     "tailscale-authkey"
-    "duckdns-token-env"
-    "desec-token-env"
     "restic-password"
     "restic-env"
     "cloudflare-tunnel-certificate"

@@ -9,6 +9,7 @@ let
 in
 {
   imports = [
+    ../../modules/cloudflare-tunnel.nix
     ../../modules/https.nix
     ../../modules/mdns.nix
     ../../modules/system.nix
@@ -39,12 +40,8 @@ in
   age.secrets.wifi-password-env.file = ../../secrets/wifi-password-env.age;
   age.secrets.ssh-github.file = ../../secrets/ssh-github.age;
   age.secrets.tailscale-authkey.file = ../../secrets/tailscale-authkey.age;
-  age.secrets.duckdns-token-env.file = ../../secrets/duckdns-token-env.age;
-  age.secrets.desec-token-env.file = ../../secrets/desec-token-env.age;
   age.secrets.restic-password.file = ../../secrets/restic-password.age;
   age.secrets.restic-env.file = ../../secrets/restic-env.age;
-  age.secrets.cloudflare-tunnel-certificate.file = ../../secrets/cloudflare-tunnel-certificate.age;
-  age.secrets.cloudflare-tunnel-credentials.file = ../../secrets/cloudflare-tunnel-credentials.age;
 
   system.stateVersion = "26.06";
 }
